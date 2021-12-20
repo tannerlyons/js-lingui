@@ -35,7 +35,7 @@ describe("Catalog", function () {
   })
 
   describe("make", function () {
-    it("should collect and write catalogs", function () {
+    it("should collect and write catalogs", async function () {
       const localeDir = copyFixture(fixture("locales", "initial"))
       const catalog = new Catalog(
         {
@@ -55,11 +55,11 @@ describe("Catalog", function () {
       // Everything should be empty
       expect(catalog.readAll()).toMatchSnapshot()
 
-      catalog.make(defaultMakeOptions)
+      await catalog.make(defaultMakeOptions)
       expect(catalog.readAll()).toMatchSnapshot()
     })
 
-    it("should only update the specified locale", function () {
+    it("should only update the specified locale", async function () {
       const localeDir = copyFixture(fixture("locales", "initial"))
       const catalog = new Catalog(
         {
@@ -79,11 +79,11 @@ describe("Catalog", function () {
       // Everything should be empty
       expect(catalog.readAll()).toMatchSnapshot()
 
-      catalog.make({ ...defaultMakeOptions, locale: "en" })
+      await catalog.make({ ...defaultMakeOptions, locale: "en" })
       expect(catalog.readAll()).toMatchSnapshot()
     })
 
-    it("should merge with existing catalogs", function () {
+    it("should merge with existing catalogs", async function () {
       const localeDir = copyFixture(fixture("locales", "existing"))
       const catalog = new Catalog(
         {
@@ -100,13 +100,13 @@ describe("Catalog", function () {
       // Everything should be empty
       expect(catalog.readAll()).toMatchSnapshot()
 
-      catalog.make(defaultMakeOptions)
+      await catalog.make(defaultMakeOptions)
       expect(catalog.readAll()).toMatchSnapshot()
     })
   })
 
   describe("makeTemplate", function () {
-    it("should collect and write a template", function () {
+    it("should collect and write a template", async function () {
       const localeDir = copyFixture(fixture("locales", "initial"))
       const catalog = new Catalog(
         {
@@ -126,13 +126,13 @@ describe("Catalog", function () {
       // Everything should be empty
       expect(catalog.readTemplate()).toMatchSnapshot()
 
-      catalog.makeTemplate(defaultMakeTemplateOptions)
+      await catalog.makeTemplate(defaultMakeTemplateOptions)
       expect(catalog.readTemplate()).toMatchSnapshot()
     })
   })
 
   describe("collect", function () {
-    it("should extract messages from source files", function () {
+    it("should extract messages from source files", async function () {
       const catalog = new Catalog(
         {
           name: "messages",
@@ -143,11 +143,11 @@ describe("Catalog", function () {
         mockConfig()
       )
 
-      const messages = catalog.collect(defaultMakeOptions)
+      const messages = await catalog.collect(defaultMakeOptions)
       expect(messages).toMatchSnapshot()
     })
 
-    it("should extract only files passed on options", function () {
+    it("should extract only files passed on options", async function () {
       const catalog = new Catalog(
         {
           name: "messages",
@@ -158,7 +158,7 @@ describe("Catalog", function () {
         mockConfig()
       )
 
-      const messages = catalog.collect({
+      const messages = await catalog.collect({
         ...defaultMakeOptions,
         files: [fixture("collect/componentA")]
       })
@@ -176,8 +176,8 @@ describe("Catalog", function () {
         mockConfig()
       )
 
-      mockConsole((console) => {
-        const messages = catalog.collect(defaultMakeOptions)
+      mockConsole(async (console) => {
+        const messages = await catalog.collect(defaultMakeOptions)
         expect(console.error).toBeCalledWith(
           expect.stringContaining(`Cannot process file`)
         )
@@ -330,11 +330,17 @@ describe("Catalog", function () {
             message: "",
             translation: "Message with custom ID",
           }),
+          "Message with <0>auto-generated</0> ID": makePrevMessage({
+            translation: "Source of message with <0>auto-generated</0> ID",
+          }),
         },
         cs: {
           "custom.id": makePrevMessage({
             message: "",
             translation: "Translation of message with custom ID",
+          }),
+          "Message with <0>auto-generated</0> ID": makePrevMessage({
+            translation: "Translation of message with auto-generated ID",
           }),
         },
       }
@@ -343,10 +349,11 @@ describe("Catalog", function () {
         "custom.id": makeNextMessage({
           message: "Message with custom ID, possibly changed",
         }),
+        "Message with <0>auto-generated</0> ID": makeNextMessage(),
       }
 
       // Without `overwrite`:
-      // The translation of `custom.id` message for `sourceLocale` is kept intact
+      // The translations of all IDs for `sourceLocale` are kept intact
       expect(
         makeCatalog({ sourceLocale: "en" }).merge(
           prevCatalogs,
@@ -359,17 +366,23 @@ describe("Catalog", function () {
             message: "Message with custom ID, possibly changed",
             translation: "Message with custom ID",
           }),
+          "Message with <0>auto-generated</0> ID": expect.objectContaining({
+            translation: "Source of message with <0>auto-generated</0> ID",
+          }),
         },
         cs: {
           "custom.id": expect.objectContaining({
             message: "Message with custom ID, possibly changed",
             translation: "Translation of message with custom ID",
           }),
+          "Message with <0>auto-generated</0> ID": expect.objectContaining({
+            translation: "Translation of message with auto-generated ID",
+          }),
         },
       })
 
       // With `overwrite`
-      // The translation of `custom.id` message for `sourceLocale` is changed
+      // The translations of all IDs for `sourceLocale` are changed
       expect(
         makeCatalog({ sourceLocale: "en" }).merge(prevCatalogs, nextCatalog, {
           overwrite: true,
@@ -380,11 +393,17 @@ describe("Catalog", function () {
             message: "Message with custom ID, possibly changed",
             translation: "Message with custom ID, possibly changed",
           }),
+          "Message with <0>auto-generated</0> ID": expect.objectContaining({
+            translation: "Message with <0>auto-generated</0> ID",
+          }),
         },
         cs: {
           "custom.id": expect.objectContaining({
             message: "Message with custom ID, possibly changed",
             translation: "Translation of message with custom ID",
+          }),
+          "Message with <0>auto-generated</0> ID": expect.objectContaining({
+            translation: "Translation of message with auto-generated ID",
           }),
         },
       })
