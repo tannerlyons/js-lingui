@@ -111,9 +111,9 @@ export function plural(value: number | string, options: ChoiceOptions): string
  * ```
  * import { selectOrdinal } from "@lingui/macro";
  * const message = selectOrdinal(count, {
- *    one: "1st",
- *    two: "2nd",
- *    few: "3rd",
+ *    one: "#st",
+ *    two: "#nd",
+ *    few: "#rd",
  *    other: "#th",
  * });
  * ```
@@ -149,15 +149,6 @@ export function selectOrdinal(
 export function select(value: string, choices: ChoiceOptions): string
 
 /**
- * Defines multiple messages for extraction
- *
- * @see {@link defineMessage} for more details
- */
-export function defineMessages<M extends Record<string, MessageDescriptor>>(
-  messages: M
-): M
-
-/**
  * Define a message for later use
  *
  * `defineMessage` can be used to add comments for translators,
@@ -181,6 +172,7 @@ export type TransProps = {
   comment?: string
   values?: Record<string, unknown>
   context?: string
+  children?: React.ReactNode
   component?: React.ComponentType<TransRenderProps>
   render?: (props: TransRenderProps) => ReactElement<any, any> | null
 }

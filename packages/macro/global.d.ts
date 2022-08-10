@@ -119,9 +119,9 @@ declare module "@lingui/macro" {
    * ```
    * import { selectOrdinal } from "@lingui/macro";
    * const message = selectOrdinal(count, {
-   *    one: "1st",
-   *    two: "2nd",
-   *    few: "3rd",
+   *    one: "#st",
+   *    two: "#nd",
+   *    few: "#rd",
    *    other: "#th",
    * });
    * ```
@@ -158,13 +158,6 @@ declare module "@lingui/macro" {
     value: string,
     choices: Record<string, string> & BasicType
   ): string
-
-  /**
-   * Defines multiple messages for extraction
-   */
-  export function defineMessages<M extends Record<string, MessageDescriptor>>(
-    messages: M
-  ): M
 
   /**
    * Define a message for later use

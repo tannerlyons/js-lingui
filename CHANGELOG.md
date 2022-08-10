@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.14.0](https://github.com/lingui/js-lingui/compare/v3.13.3...v3.14.0) (2022-06-22)
+
+
+### Bug Fixes
+
+* Add extra package.json under `/esm` ([#1258](https://github.com/lingui/js-lingui/issues/1258)) ([80cd337](https://github.com/lingui/js-lingui/commit/80cd3378ceb5677bfa50b14f67e4e31703392298))
+* Fix error read properties of undefined ([#1239](https://github.com/lingui/js-lingui/issues/1239)) ([8dd2398](https://github.com/lingui/js-lingui/commit/8dd2398e0d1fdce1663b8aee391f6ab2208be77b))
+* JSX attribute parsing issue when using html entities ([#1234](https://github.com/lingui/js-lingui/issues/1234)) ([98e9332](https://github.com/lingui/js-lingui/commit/98e93322216ab0fc87b8b545fbdd9263b4b6b76b))
+
+
+### Features
+
+* Pass props to I18nProvider.defaultComponent in Trans.render style ([#1242](https://github.com/lingui/js-lingui/issues/1242)) ([fe4cac4](https://github.com/lingui/js-lingui/commit/fe4cac4f89ae195ad8b5216fdaede73900753686))
+
+
+
+
+
+## [3.13.3](https://github.com/lingui/js-lingui/compare/v3.13.2...v3.13.3) (2022-04-24)
+
+
+### Bug Fixes
+
+* @lingui/react compatible with React 18 ([2a235ba](https://github.com/lingui/js-lingui/commit/2a235baa093d668a0a029ec6c683e9dc00f68f42))
+* JSX attribute parsing issue when using double quotes ([#1226](https://github.com/lingui/js-lingui/issues/1226)) ([27a7ded](https://github.com/lingui/js-lingui/commit/27a7ded08be7299417ccebddfd25fa39bda99e77))
+* specify children for react v18 types ([#1230](https://github.com/lingui/js-lingui/issues/1230)) ([ee69736](https://github.com/lingui/js-lingui/commit/ee69736089d4c48117d85582b56a26c09cdf82ea))
+
+
+
+
+
+## [3.13.2](https://github.com/lingui/js-lingui/compare/v3.13.1...v3.13.2) (2022-01-24)
+
+
+### Bug Fixes
+
+* localeData interpolation broken ([457735b](https://github.com/lingui/js-lingui/commit/457735bb61f0a75d0ce176874b1c67a65c4b3084))
+
+
+
+
+
+## [3.13.1](https://github.com/lingui/js-lingui/compare/v3.13.0...v3.13.1) (2022-01-21)
+
+
+### Bug Fixes
+
+* add lingui core to macro peer dependencies ([#1187](https://github.com/lingui/js-lingui/issues/1187)) ([daaa773](https://github.com/lingui/js-lingui/commit/daaa7738c1ca08ee30d5bec4c32214bf665cbfbe))
+* cloud service `import()` on case-sensitive filesystems ([#1174](https://github.com/lingui/js-lingui/issues/1174)) ([5feb120](https://github.com/lingui/js-lingui/commit/5feb120e8c75d7b8c082d5c4b68185ef5dcc3ebc))
+* i18n.activate should load instantly new messages ([#1182](https://github.com/lingui/js-lingui/issues/1182)) ([f8f47a2](https://github.com/lingui/js-lingui/commit/f8f47a2385fe3d8dd3395c493027de2492509325))
+* remove the obsolete `defineMessages` function from the typings. ([#1179](https://github.com/lingui/js-lingui/issues/1179)) ([19b032f](https://github.com/lingui/js-lingui/commit/19b032f2d3634722c6bb9cc69ae3ae6c99773cb7))
+
+
+
+
+
 # [3.13.0](https://github.com/lingui/js-lingui/compare/v3.12.1...v3.13.0) (2021-11-26)
 
 

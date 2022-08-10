@@ -51,6 +51,14 @@ export default class MacroJSX {
     this.elementIndex = makeCounter()
   }
 
+  safeJsxAttribute = (name: string, value: string) => {
+    // This handles quoted JSX attributes and html entities.
+    return this.types.jsxAttribute(
+      this.types.jsxIdentifier(name),
+      this.types.jsxExpressionContainer(this.types.stringLiteral(value))
+    )
+  }
+
   replacePath = (path: NodePath) => {
     const tokens = this.tokenizeNode(path.node)
 
@@ -78,21 +86,11 @@ export default class MacroJSX {
 
       if (process.env.NODE_ENV !== "production") {
         if (message) {
-          attributes.push(
-            this.types.jsxAttribute(
-              this.types.jsxIdentifier(MESSAGE),
-              this.types.stringLiteral(message)
-            )
-          )
+          attributes.push(this.safeJsxAttribute(MESSAGE, message))
         }
       }
     } else {
-      attributes.push(
-        this.types.jsxAttribute(
-          this.types.jsxIdentifier(ID),
-          this.types.stringLiteral(message)
-        )
-      )
+      attributes.push(this.safeJsxAttribute(ID, message))
     }
 
     if (process.env.NODE_ENV !== "production") {

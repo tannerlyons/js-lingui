@@ -18,3 +18,6 @@ Feel free to `send a PR <https://github.com/lingui/js-lingui/issues/new>`__ to l
 - `Greenlight <https://greenlightready.com>`__
 - `OkCupid <https://www.okcupid.com>`__
 - `mapflow.ai <https://mapflow.ai>`__
+- `Ascendero.com <https://ascendero.com/>`__
+- `InterMenu.com <https://intermenu.com>`__
+- `Fider <https://fider.io/>`__ (`source <https://github.com/getfider/fider>`__)
